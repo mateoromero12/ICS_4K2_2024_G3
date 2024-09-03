@@ -1,2 +1,5 @@
-# ICS_4K2_2024_G3
-Repositorio del grupo 3 para el desarrollo de la materia Ingeniería y Calidad de Software en el curso 4K2 de la Universidad Tecnológica Nacional - Facultad Regional Córdoba en el año 2024.
+Repositorio del Grupo 3 de Ingenieria y Calidad de Software 4K2 2024.
+
+Estructura del repositorio:
+
+![Alt text](./Material%20Práctico/TPs%20Evaluables/TP04/EstructuraRepositorio.jpg?raw=true "Diagrama de la estructura")
