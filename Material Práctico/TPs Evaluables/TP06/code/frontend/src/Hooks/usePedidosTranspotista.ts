@@ -1,9 +1,11 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import Swal from 'sweetalert2'; // Importamos SweetAlert2
-import { getCotizacionesByTransportistaLogueadoPendientes, getCotizacionesByTransportistaLogueadoConfirmadas } from '../Service/apiService';
+import Swal from 'sweetalert2';
+import { getCotizacionesByTransportistaLogueadoPendientes, getCotizacionesByTransportistaLogueadoConfirmadas, enviarCorreoNuevaCotizacion } from '../Service/apiService';
 import { Cotizacion } from '../Types/Cotizacion';
+import useAuth from './useAuth';
 
 const usePedidosTransportista = (id: number) => {
+  const { user } = useAuth();
   const [cotizacionesTransportistaLogueadoPendiente, setCotizacionTransportistaLogueadoPendiente] = useState<Cotizacion[]>([]);
   const [cotizacionesTransportistaLogueadoConfirmado, setCotizacionTransportistaLogueadoConfirmado] = useState<Cotizacion[]>([]);
 
@@ -39,24 +41,31 @@ const usePedidosTransportista = (id: number) => {
       );
 
       if (nuevasCotizaciones.length > 0) {
+        nuevasCotizaciones.forEach(async (cotizacion: Cotizacion) => {
+          try {
+            await enviarCorreoNuevaCotizacion(user?.email ?? '', cotizacion);
+          } catch (error) {
+            console.error('Error al enviar el correo:', error);
+          }
+        });
+
         Swal.fire({
           title: 'Nueva Cotización Confirmada',
           text: `Tienes ${nuevasCotizaciones.length} nueva(s) cotización(es) confirmada(s).`,
           icon: 'info',
           confirmButtonText: 'OK',
-          timer: 2000, 
-          timerProgressBar: true, 
+          timer: 2000,
+          timerProgressBar: true,
         });
       }
 
       guardarCotizacionesPrevias(datos);
-
       prevCotizacionesConfirmadas.current = datos;
       setCotizacionTransportistaLogueadoConfirmado(datos);
     } catch (error) {
       console.error('Error al obtener cotizaciones confirmadas:', error);
     }
-  }, [id]);
+  }, [id, user?.email]);
 
   useEffect(() => {
     obtenerCotizacionesPendientes();

@@ -1,3 +1,5 @@
+import { Cotizacion } from "../Types/Cotizacion";
+
 const API_BASE_URL = "http://localhost:3000/api";
 
 interface FetchOptions {
@@ -44,10 +46,7 @@ export const getDatosTransportistas = async (dador_id: number) => {
   return fetchAPI(`/transportistas/${dador_id}`);
 };
 
-export const getCotizacionPorDadorYTransportista = async (
-  dador_id: number,
-  id: number
-) => {
+export const getCotizacionPorDadorYTransportista = async (dador_id: number, id: number ) => {
   return fetchAPI(`/cotizaciones/${dador_id}/${id}`);
 };
 
@@ -78,5 +77,15 @@ export const createTarjeta = async (tarjetaData: Record<string, any>) => {
   return fetchAPI("/tarjetas/agregar", {
     method: "POST",
     body: JSON.stringify(tarjetaData),
+  });
+};
+
+export const enviarCorreoNuevaCotizacion = async (correoTransportista: string, cotizacion: Cotizacion) => {
+  return fetchAPI("/mail/enviar-correo", {
+    method: "POST",
+    body: JSON.stringify({
+      correoTransportista,
+      cotizacion,
+    }),
   });
 };
