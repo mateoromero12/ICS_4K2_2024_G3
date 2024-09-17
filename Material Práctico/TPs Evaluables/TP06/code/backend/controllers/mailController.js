@@ -6,26 +6,30 @@ const transporter = nodemailer.createTransport({
   host: "smtp.ethereal.email",
   port: 587,
   auth: {
-    user: "sarah.funk14@ethereal.email",
-    pass: "UJ6ghAbnc6sXABdnZJ",
+    user: "maximillian.watsica90@ethereal.email",
+    pass: "5wpE9kSqyy1nSuaz9U",
   },
 });
 
 const enviarCorreoNuevaCotizacion = (correoTransportista, cotizacion) => {
-  const fechaRetiroFormateada = new Date(cotizacion.fecha_retiro).toLocaleDateString('es-ES', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric',
+  const fechaRetiroFormateada = new Date(
+    cotizacion.fecha_retiro
+  ).toLocaleDateString("es-ES", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
   });
 
-  const fechaEntregaFormateada = new Date(cotizacion.fecha_entrega).toLocaleDateString('es-ES', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric',
+  const fechaEntregaFormateada = new Date(
+    cotizacion.fecha_entrega
+  ).toLocaleDateString("es-ES", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
   });
 
   const mailOptions = {
-    from: "sarah.funk14@ethereal.email",
+    from: "maximillian.watsica90@ethereal.email",
     to: correoTransportista,
     subject: "Nueva Cotización Confirmada",
     html: `

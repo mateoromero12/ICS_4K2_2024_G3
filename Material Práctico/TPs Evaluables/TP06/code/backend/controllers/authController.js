@@ -29,12 +29,13 @@ const login = (req, res) => {
           id: dador.id,
           username: user.username,
           email: user.email,
-          role: "dador", 
+          role: "dador",
         };
         return res.json(userData);
       }
 
-      const queryTransportista = "SELECT * FROM Transportistas WHERE usuario_id = ?";
+      const queryTransportista =
+        "SELECT * FROM Transportistas WHERE usuario_id = ?";
       connection.query(
         queryTransportista,
         [user.id],
@@ -47,7 +48,7 @@ const login = (req, res) => {
           if (transportistaResults.length > 0) {
             const transportista = transportistaResults[0];
             const userData = {
-              id: transportista.id, 
+              id: transportista.id,
               username: user.username,
               email: user.email,
               role: "transportista",
